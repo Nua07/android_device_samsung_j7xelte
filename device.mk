@@ -194,8 +194,13 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_PACKAGES += \
     android.hardware.wifi@1.0-service-lazy \
+    macloader \
+    wifiloader \
     hostapd \
+    libwpa_client \
     wificond \
+    wifilogd \
+    wlutil \
     wpa_supplicant \
     wpa_supplicant.conf
 

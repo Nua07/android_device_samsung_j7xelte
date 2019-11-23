@@ -55,7 +55,7 @@
 
 /dev/video55              0666   system     graphics
 /dev/fimg2d               0666   system     graphics
-/dev/i2c-2                0660   system     system
+/dev/i2c-*                0660   system     system
 /dev/HPD                  0660   system     system
 
 # mfc
@@ -182,6 +182,19 @@
 /dev/ssp_sensorhub        0660   system     system
 /dev/ssp_data_injection   0660   system     system
 
-# Fingerprint Sensor
-/dev/vfsspi        0660   system     system
-/dev/esfp0        0660   system     system
+# Sensorhub IIO
+/dev/ssp_sensorhub        0660   system		system
+/dev/iio:device*          0660   system		system
+/sys/devices/13930000.spi/spi_master/spi2/spi2.0/iio:device*    buffer/enable       0660    system    system
+/sys/devices/13930000.spi/spi_master/spi2/spi2.0/iio:device*    buffer/length       0660    system    system
+/sys/bus/iio/devices/iio:device*    0664   system     radio
+
+# IIO
+/dev/iio:device*          0660   system		system
+/sys/bus/iio/devices/iio:device*    0664   system     radio
+
+# Google FRP solution
+/dev/block/platform/13540000.dwmmc0/by-name/PERSISTENT    0660    system    system
+
+# Reactivation Lock solution
+/dev/block/platform/13540000.dwmmc0/by-name/STEADY    0660    system    system
