@@ -184,7 +184,7 @@ on boot
     chmod 0664 /efs/FactoryApp/rtc_status
 
     chown bluetooth bluetooth /dev/ttySAC0
-    chmod 0660 /dev/ttySAC0
+    chmod 0666 /dev/ttySAC0
 
 # sem_daemon permission
     chown system system /efs/sec_efs/ssp_data
