@@ -203,18 +203,6 @@ PRODUCT_PACKAGES += \
     android.hardware.wifi@1.0 \
     android.hardware.wifi@1.0-impl
 
-PRODUCT_PACKAGES += \
-    android.hardware.wifi@1.0-service-lazy \
-    macloader \
-    wifiloader \
-    hostapd \
-    libwpa_client \
-    wificond \
-    wifilogd \
-    wlutil \
-    wpa_supplicant \
-    wpa_supplicant.conf
-
 # Bluetooth
 PRODUCT_PACKAGES += \
     android.hardware.bluetooth@1.0-impl.7870 \
