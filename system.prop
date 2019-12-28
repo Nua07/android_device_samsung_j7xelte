@@ -1,0 +1,17 @@
+# Disable tripple bufferring to reduce lags
+ro.sf.disable_triple_buffer=0
+
+# DPI
+ro.sf.lcd_density=280
+
+# Sdcardfs
+ro.sys.sdcardfs=false
+
+#ADB
+persist.adb.notify=0
+persist.service.adb.enable=1 
+persist.service.debuggable=1
+persist.sys.usb.config=mtp,adb
+#Enable ADB Debugging By Default & Disable USB Debugging
+
+sys.display-size=1920x1080
