@@ -147,8 +147,9 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     libexynoscamera_shim
 
-#PRODUCT_PACKAGES += \
-#    Snap
+#Camera APP
+PRODUCT_PACKAGES += \
+    Camera2
 
 # TextClassifier
 PRODUCT_PACKAGES += \
