@@ -14,43 +14,19 @@
 # limitations under the License.
 #
 
-$(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
-
-LOCAL_PATH := device/samsung/j7xelte
-
+# Overlays
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
 
-PRODUCT_CHARACTERISTICS := phone
+# RRO (Runtime Resource Overlay)
+PRODUCT_ENFORCE_RRO_TARGETS := *
+PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += $(LOCAL_PATH)/overlay/lineage-sdk
+PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += $(LOCAL_PATH)/overlay/packages/apps/Snap
 
 # Boot animation
 TARGET_SCREEN_WIDTH := 720
 TARGET_SCREEN_HEIGHT := 1280
 TARGET_BOOTANIMATION_PRELOAD := true
 TARGET_BOOTANIMATION_TEXTURE_CACHE := true
-
-# Flat device tree for boot image
-PRODUCT_HOST_PACKAGES += \
-    dtbhtoolExynos
-
-# Ramdisk
-PRODUCT_PACKAGES += \
-    fstab.samsungexynos7870 \
-    init.baseband.rc \
-    init.rilchip.rc \
-    init.power.rc \
-    init.samsung.rc \
-    init.samsungexynos7870.rc \
-    init.samsungexynos7870.usb.rc \
-    init.wifi.rc \
-    ueventd.samsungexynos7870.rc
-
-# cpboot-daemon
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/ramdisk/cbd:$(TARGET_COPY_OUT_VENDOR)/bin/cbd
-
-# sswap
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/ramdisk/sswap:$(TARGET_COPY_OUT_VENDOR)/bin/sswap
 
 # Permissions
 PRODUCT_COPY_FILES += \
@@ -64,6 +40,7 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.camera.raw.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.raw.xml \
     frameworks/native/data/etc/android.hardware.ethernet.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.ethernet.xml \
     frameworks/native/data/etc/android.hardware.location.gps.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.location.gps.xml \
+    frameworks/native/data/etc/android.hardware.nfc.xml:system/etc/permissions/android.hardware.nfc.xml \
     frameworks/native/data/etc/android.hardware.opengles.aep.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.opengles.aep.xml \
     frameworks/native/data/etc/android.hardware.telephony.gsm.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.telephony.gsm.xml \
     frameworks/native/data/etc/android.hardware.telephony.ims.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.telephony.ims.xml \
@@ -100,117 +77,17 @@ PRODUCT_PACKAGES += \
     libion \
     libfimg
 
-# seccomp_policy
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/seccomp/mediacodec-seccomp.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/mediacodec.policy \
-    $(LOCAL_PATH)/seccomp/mediaextractor-seccomp.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/mediaextractor.policy
-
-# DRM
+# Ramdisk
 PRODUCT_PACKAGES += \
-    android.hardware.drm@1.0-impl \
-    android.hardware.drm@1.0-service
-
-# Keymaster
-PRODUCT_PACKAGES += \
-    android.hardware.keymaster@3.0-impl \
-    android.hardware.keymaster@3.0-service
-
-# Cas
-PRODUCT_PACKAGES += \
-    android.hardware.cas@1.1-service
-
-# Doze
-PRODUCT_PACKAGES += \
-    SamsungDoze
-
-# Touch features
-PRODUCT_PACKAGES += \
-    vendor.lineage.touch@1.0-service.samsung
-
-# LiveDisplay
-PRODUCT_PACKAGES += \
-    vendor.lineage.livedisplay@2.0-service.samsung-exynos
-
-# Camera
-PRODUCT_PACKAGES += \
-    android.hardware.camera.provider@2.4-impl.exynos7870 \
-    android.hardware.camera.provider@2.4-service \
-    camera.universal7870 \
-    camera.device@1.0-impl \
-    camera.device@3.2-impl \
-    camera.device@3.3-impl \
-    camera.device@3.4-impl
-
-PRODUCT_PACKAGES += \
-    libhwjpeg \
-    libion_exynos
-
-PRODUCT_PACKAGES += \
-    libexynoscamera_shim
-
-#Camera APP
-PRODUCT_PACKAGES += \
-    Camera2
-
-# TextClassifier
-PRODUCT_PACKAGES += \
-    textclassifier.bundle1
-
-# Radio
-PRODUCT_PACKAGES += \
-    libxml2 \
-    libprotobuf-cpp-full \
-    android.hardware.radio@1.2 \
-    android.hardware.radio.deprecated@1.0
-
-PRODUCT_PACKAGES += \
-    rild \
-    libril \
-    libsecril-client \
-    libsecril-client-sap \
-    libreference-ril
-
-PRODUCT_PACKAGES += \
-    modemloader
-
-# IPv6
-PRODUCT_PACKAGES += \
-    ebtables \
-    ethertypes \
-    libebtc
-
-# Net
-PRODUCT_PACKAGES += \
-    android.system.net.netd@1.0 \
-    libandroid_net \
-    netutils-wrapper-1.0
-
-# Wi-fi
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/wifi/cred.conf:system/etc/wifi/cred.conf \
-    $(LOCAL_PATH)/configs/wifi/wpa_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/wpa_supplicant_overlay.conf \
-    $(LOCAL_PATH)/configs/wifi/p2p_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/p2p_supplicant_overlay.conf \
-    $(LOCAL_PATH)/configs/wifi/filter_ie:system/etc/wifi/filter_i
-
-PRODUCT_PACKAGES += \
-    wifiloader \
-    hostapd \
-    wificond \
-    wifilogd \
-    wlutil \
-    libwpa_client \
-    wpa_supplicant \
-    wpa_supplicant.conf \
-    android.hardware.wifi@1.0-service \
-    android.hardware.wifi@1.0 \
-    android.hardware.wifi@1.0-impl
-
-# Bluetooth
-PRODUCT_PACKAGES += \
-    hwaddrs \
-    libbt-vendor \
-    android.hardware.bluetooth@1.0-impl \
-    android.hardware.bluetooth@1.0-service
+    fstab.samsungexynos7870 \
+    init.baseband.rc \
+    init.rilchip.rc \
+    init.power.rc \
+    init.samsung.rc \
+    init.samsungexynos7870.rc \
+    init.samsungexynos7870.usb.rc \
+    init.wifi.rc \
+    ueventd.samsungexynos7870.rc
 
 # Audio
 PRODUCT_PACKAGES += \
@@ -245,6 +122,94 @@ PRODUCT_COPY_FILES += \
     frameworks/av/services/audiopolicy/config/r_submix_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/r_submix_audio_policy_configuration.xml \
     frameworks/av/services/audiopolicy/config/usb_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/usb_audio_policy_configuration.xml
 
+# Bluetooth
+PRODUCT_PACKAGES += \
+    hwaddrs \
+    libbt-vendor \
+    android.hardware.bluetooth@1.0-impl \
+    android.hardware.bluetooth@1.0-service
+
+# Camera
+PRODUCT_PACKAGES += \
+    android.hardware.camera.provider@2.4-impl.exynos7870 \
+    android.hardware.camera.provider@2.4-service \
+    camera.universal7870 \
+    camera.device@1.0-impl \
+    camera.device@3.2-impl \
+    camera.device@3.3-impl \
+    camera.device@3.4-impl
+
+PRODUCT_PACKAGES += \
+    libhwjpeg \
+    libion_exynos
+
+PRODUCT_PACKAGES += \
+    libexynoscamera_shim
+
+# Camera APP
+PRODUCT_PACKAGES += \
+    Camera2
+
+# Cas
+PRODUCT_PACKAGES += \
+    android.hardware.cas@1.1-service
+
+# Configstore
+PRODUCT_PACKAGES += \
+    android.hardware.configstore@1.1-service
+
+# cpboot-daemon
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/ramdisk/cbd:$(TARGET_COPY_OUT_VENDOR)/bin/cbd
+
+# Doze
+PRODUCT_PACKAGES += \
+    SamsungDoze
+
+# DRM
+PRODUCT_PACKAGES += \
+    android.hardware.drm@1.0-impl \
+    android.hardware.drm@1.0-service \
+    android.hardware.drm@1.2-service.clearkey
+
+# Flat device tree for boot image
+PRODUCT_HOST_PACKAGES += \
+    dtbhtoolExynos
+
+# GPS
+PRODUCT_PACKAGES += \
+    android.hardware.gnss@1.0-impl \
+    gpsd_shim
+
+# Healthd
+PRODUCT_PACKAGES += \
+    android.hardware.health@2.0-impl
+
+# IPv6
+PRODUCT_PACKAGES += \
+    ebtables \
+    ethertypes \
+    libebtc
+
+# Keymaster
+PRODUCT_PACKAGES += \
+    android.hardware.keymaster@3.0-impl \
+    android.hardware.keymaster@3.0-service
+
+# Keys
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/keylayout/gpio-keys.kl:/$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/gpio-keys.kl \
+    $(LOCAL_PATH)/configs/keylayout/sec_touchscreen.kl:/$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/sec_touchscreen.kl
+
+# Lights
+PRODUCT_PACKAGES += \
+    android.hardware.light@2.0-impl \
+    lights.universal7870
+
+# LiveDisplay
+PRODUCT_PACKAGES += \
+    vendor.lineage.livedisplay@2.0-service.samsung-exynos
+
 # Media
 PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_audio.xml \
@@ -254,29 +219,16 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/media/media_codecs_performance.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_performance.xml \
     $(LOCAL_PATH)/configs/media/media_profiles_V1_0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_profiles_V1_0.xml
 
-# Healthd
+# Network
 PRODUCT_PACKAGES += \
-    android.hardware.health@2.0-impl
+    android.system.net.netd@1.0 \
+    libandroid_net \
+    netutils-wrapper-1.0
 
-# GPS
+# Offmode charger
 PRODUCT_PACKAGES += \
-    android.hardware.gnss@1.0-impl \
-    gpsd_shim
-
-# Keys
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/keylayout/gpio-keys.kl:/$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/gpio-keys.kl \
-    $(LOCAL_PATH)/configs/keylayout/sec_touchscreen.kl:/$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/sec_touchscreen.kl
-
-# Configstore
-PRODUCT_PACKAGES += \
-    android.hardware.configstore@1.1-service
-
-# Touchscreen
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/idc/AVRCP.idc:$(TARGET_COPY_OUT_VENDOR)/usr/idc/AVRCP.idc \
-    $(LOCAL_PATH)/configs/idc/qwerty.idc:$(TARGET_COPY_OUT_VENDOR)/usr/idc/qwerty.idc \
-    $(LOCAL_PATH)/configs/idc/qwerty2.idc:$(TARGET_COPY_OUT_VENDOR)/usr/idc/qwerty2.idc
+    charger_res_images \
+    lineage_charger_res_images
 
 # Power
 PRODUCT_PACKAGES += \
@@ -285,41 +237,73 @@ PRODUCT_PACKAGES += \
     android.hardware.power.stats@1.0-service.mock \
     power.universal7870
 
-# Lights
+# Radio
 PRODUCT_PACKAGES += \
-    android.hardware.light@2.0-impl \
-    lights.universal7870
+    libxml2 \
+    libprotobuf-cpp-full \
+    android.hardware.radio@1.2 \
+    android.hardware.radio.deprecated@1.0
+
+PRODUCT_PACKAGES += \
+    rild \
+    libril \
+    libsecril-client \
+    libsecril-client-sap \
+    libreference-ril
+
+PRODUCT_PACKAGES += \
+    modemloader
+
+# seccomp_policy
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/seccomp/mediacodec-seccomp.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/mediacodec.policy \
+    $(LOCAL_PATH)/seccomp/mediaextractor-seccomp.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/mediaextractor.policy
 
 # Sensors
 PRODUCT_PACKAGES += \
     android.hardware.sensors@1.0-impl
 
-PRODUCT_PACKAGES += \
-    android.hardware.vibrator@1.0-impl \
-    android.hardware.vibrator@1.0-service
+# sswap
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/ramdisk/sswap:$(TARGET_COPY_OUT_VENDOR)/bin/sswap
 
-# Trust HAL
+# TextClassifier
 PRODUCT_PACKAGES += \
-    vendor.lineage.trust@1.0-service
+    textclassifier.bundle1
+
+# Touchscreen
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/idc/AVRCP.idc:$(TARGET_COPY_OUT_VENDOR)/usr/idc/AVRCP.idc \
+    $(LOCAL_PATH)/configs/idc/qwerty.idc:$(TARGET_COPY_OUT_VENDOR)/usr/idc/qwerty.idc \
+    $(LOCAL_PATH)/configs/idc/qwerty2.idc:$(TARGET_COPY_OUT_VENDOR)/usr/idc/qwerty2.idc
 
 # USB
 PRODUCT_PACKAGES += \
     android.hardware.usb@1.0-service.basic
 
-# ADB
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
-    persist.sys.usb.config=adb \
-    ro.adb.secure=0 \
-    ro.secure=0
-
-# Root
+# Vibrator
 PRODUCT_PACKAGES += \
-    su
+    android.hardware.vibrator@1.0-impl \
+    android.hardware.vibrator@1.0-service
 
-# Offmode charger
+# Wi-fi
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/wifi/cred.conf:system/etc/wifi/cred.conf \
+    $(LOCAL_PATH)/configs/wifi/wpa_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/wpa_supplicant_overlay.conf \
+    $(LOCAL_PATH)/configs/wifi/p2p_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/p2p_supplicant_overlay.conf \
+    $(LOCAL_PATH)/configs/wifi/filter_ie:system/etc/wifi/filter_i
+
 PRODUCT_PACKAGES += \
-    charger_res_images \
-    lineage_charger_res_images
+    hostapd \
+    wificond \
+    wifilogd \
+    wlutil \
+    libwpa_client \
+    wpa_supplicant \
+    wpa_supplicant.conf \
+    android.hardware.wifi@1.0-service \
+    android.hardware.wifi@1.3 \
+    android.hardware.wifi@1.3-impl
 
 # call Samsung LSI board support package
 #INCLUDE_EXYNOS_BSP := true
