@@ -15,4 +15,4 @@
 #
 
 BOARD_SEPOLICY_DIRS += \
-    device/samsung/gtaxllte/sepolicy_tmp/common
+    device/samsung/j7xelte/sepolicy_tmp/common
