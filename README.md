@@ -1,65 +1,24 @@
-Device configuration for the Samsung Galaxy J7 2016
+The Samsung J7 2016 (codenamed _"j7xelte"_) are a mid-range smartphone from Samsung. It was announced and released in March 2016.
 
-Copyright (C) 2017 The LineageOS Project
-Copyright (C) 2017 Valera Chigir <valera1978@tut.by>
-Copyright (C) 2019 Salvatore Fornaro
+## Device specifications
 
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
+| Device       | Samsung Galaxy J7 2016                             |
+| -----------: | :----------------------------------------------    |
+| SoC          | Samsung Exynos 7870                                |
+| CPU          | Octa-core, 1586 MHz, ARM Cortex-A53, 64-bit, 14 nm |
+| GPU          | Mali-T830                                          |
+| Memory       | 2GB (LPDDR3X)                                      |
+| Shipped Android version | 6.0.1                                     |
+| Storage      | 16GB eMMC 5.1 flash storage                        |
+| Battery      | Removable Li-Ion 3300 mAh                       |
+| Dimensions   |  151.7 x 76 x 7.8 mm              |
+| Display      | 1280 x 720  (16:9), 5.5  inch                      |
+| Rear camera 1 | 13MP, f/1.9                                       |
+| Front camera  | 5MP, f/1.9                                               |
 
-      http://www.apache.org/licenses/LICENSE-2.0
+## Device picture
 
-------------------------------------------------------------------
+![Samsung J7 2016](https://http2.mlstatic.com/samsung-galaxy-j7-2016-octa-core-4g-16-gb-local-recoleta-D_NQ_NP_703115-MLA25210918368_122016-F.jpg)
 
-* Description
 
-  This repository is for LineageOS on Samsung Galaxy J7 2016 (j7xelte)
 
-* How To Build LineageOS for Samsung Galaxy J7 2016
-
-  - Make a workspace
-
-mkdir LineageOS
-cd LineageOS
-
-  - Do repo init & sync
-
-repo init -u git://github.com/LineageOS/android.git -b lineage-17.0
-repo init -u git://github.com/crdroidandroid/android.git -b 10.0
-
-  - Create .repo/local_manifests/roomservice.xml with the following content:
-
-```
-<?xml version="1.0" encoding="UTF-8"?>
-<manifest>
-
-  <project name="sasi2006166-exynos7870/android_device_samsung_j7xelte" path="device/samsung/j7xelte" remote="github" />
-  <project name="sasi2006166-exynos7870/android_kernel_samsung_exynos7870" path="kernel/samsung/exynos7870" remote="github" />
-  <project name="sasi2006166-exynos7870/android_vendor_samsung_j7xelte" path="vendor/samsung/j7xelte" remote="github" />
-
-  <project name="Valera1978/android_hardware_samsung" path="hardware/samsung" remote="github" />
-  <project name="LineageOS/android_packages_resources_devicesettings" path="packages/resources/devicesettings" remote="github" />
-
-</manifest>
-```
-
-repo sync
-
-  - Copy proprietary vendor files
-
-  There are two options to to that. Connect your device with adb enabled and run:
-
-./extract-files.sh
-
-  Or if you have the system image unpacked on your disk, then simply run:
-
-    STOCK_ROM_DIR=/path/to/system ./extract-files.sh
-
-  - Setup environment
-
-. build/envsetup.sh
-
-  - Build LineageOS
-
-brunch j7xelte

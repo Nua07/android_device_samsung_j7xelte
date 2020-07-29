@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2012 The Android Open Source Project
- * Copyright (C) 2014 The CyanogenMod Project <http://www.cyanogenmod.org>
+ * Copyright (C) 2017 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,17 +14,20 @@
  * limitations under the License.
  */
 
-#ifndef _BDROID_BUILDCFG_H
-#define _BDROID_BUILDCFG_H
+#define LOG_TAG "libbauthtzcommon_shim"
+#define LOG_NDEBUG 0
 
-#define BTM_DEF_LOCAL_NAME   "Samsung Galaxy J6 2016"
+#include <cutils/log.h>
 
-#define BTM_WBS_INCLUDED        TRUE    /* Enable WBS */
-#define BTIF_HF_WBS_PREFERRED   FALSE   /* Don't use WBS by default */
+int BAuth_Hat_OP(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5)
+{
+    ALOGW("SHIM: hijacking %s!", __func__);
 
-#define BLE_VND_INCLUDED        TRUE
+    /*
+     * This function is supposed to pass the hardware authentication token
+     * (HAT) to the mobicore trustlet.
+     */
 
-/* Disable the eSCO commands */
-#define BTM_SCO_ENHANCED_SYNC_ENABLED FALSE
+    return 0;
+}
 
-#endif
