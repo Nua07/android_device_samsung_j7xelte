@@ -37,7 +37,6 @@ TARGET_VENDOR := samsung
 PRODUCT_GMS_CLIENTID_BASE := android-samsung
 
 TARGET_BOOT_ANIMATION_RES := 720
-#TARGET_GAPPS_ARCH := arm64
 
 # Build info
 BUILD_FINGERPRINT :="samsung/j7xeltexx/j7xelte:8.1.0/M1AJQ/J710FXXU5CRL2:user/release-keys"
